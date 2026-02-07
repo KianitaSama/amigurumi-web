@@ -1,32 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom'; // Assuming you'll use React Router
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom'; // Assuming you'll use React Router
 import Input from '../components/common/Input.jsx'; // Componente Input reutilizable
 import Button from '../components/common/Button.jsx'; // Componente Button reutilizable
-import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showCreds, setShowCreds] = useState(false);
-    const [error, setError] = useState('');
-    const { login, user } = useAuth();
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        if (user) {
-            navigate('/dashboard');
-        }
-    }, [user, navigate]);
 
     const handleLogin = (e) => {
         e.preventDefault();
-        const { success, message } = login(email, password);
-        if (success) {
-            setError('');
-            navigate('/dashboard');
-            return;
-        }
-        setError(message);
+        // Lógica de inicio de sesión aquí
+        alert(`Iniciando sesión con: ${email}`);
     };
 
     return (
@@ -53,11 +38,6 @@ const Login = () => {
 
                 {/* Separador horizontal */}
                 <hr className="border-t border-gray-300 my-4" />
-                {error && (
-                    <div className="rounded-2xl border border-rosado-claro/80 bg-rosado-claro/20 px-4 py-3 text-sm text-rosado-principal">
-                        {error}
-                    </div>
-                )}
 
                 {/*
                     Formulario de inicio de sesión
@@ -109,20 +89,20 @@ const Login = () => {
                     </Button>
                 </form>
 
-                <div className="flex items-center my-4 gap-3">
-                    <hr className="flex-grow border-t border-gray-300" />
-                    <span className="px-4 text-sm text-gray-500">O</span>
-                    <hr className="flex-grow border-t border-gray-300" />
-                </div>
-                <div className="flex justify-center">
-                    <button
-                        type="button"
-                        className="text-xs font-semibold uppercase tracking-wider text-verde-bosque hover:text-rosado-principal"
-                        onClick={() => setShowCreds(true)}
-                    >
-                        Credenciales Ejemplo
-                    </button>
-                </div>
+                    <div className="flex items-center my-4 gap-3">
+                        <hr className="flex-grow border-t border-gray-300" />
+                        <span className="px-4 text-sm text-gray-500">O</span>
+                        <hr className="flex-grow border-t border-gray-300" />
+                    </div>
+                    <div className="flex justify-center">
+                        <button
+                            type="button"
+                            className="text-xs font-semibold uppercase tracking-wider text-verde-bosque hover:text-rosado-principal"
+                            onClick={() => setShowCreds(true)}
+                        >
+                           Credenciales Ejemplo
+                        </button>
+                    </div>
 
                 <div className="text-center text-xs sm:text-sm text-gris-carbon">
                     <p>

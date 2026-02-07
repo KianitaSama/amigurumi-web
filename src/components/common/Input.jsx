@@ -8,6 +8,9 @@ const Input = ({
     className = '',          // Clases adicionales para personalizar estilos desde fuera
     inputStyle = {},         // Estilos en línea opcionales para ajustes puntuales
     borderColor = 'border-gray-300', // Clase de Tailwind para color de borde (por defecto gris)
+    id,
+    name,
+    ...rest
 }) => {
     return (
         // Elemento input nativo con configuración y estilos
@@ -16,11 +19,14 @@ const Input = ({
             placeholder={placeholder}
             value={value}
             onChange={onChange}
+            id={id}
+            name={name}
             className={`w-full px-4 py-2 border-2 rounded-lg focus:outline-none focus:ring-4 
                 focus:ring-sakura-claro bg-white text-gray-700 placeholder-gray-400
                 ${borderColor} ${className}`}
             // Estilos en línea opcionales, útiles para casos específicos
             style={inputStyle}
+            {...rest}
         />
     );
 };

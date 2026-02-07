@@ -2,6 +2,8 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
+import Profiles from "./pages/Profiles";
+import RegistrationForm from "./pages/RegistrationForm";
 
 const RequireAuth = ({ children }) => {
   const { user } = useAuth();
@@ -21,11 +23,20 @@ function App() {
     <Routes>
       <Route path="/" element={<HomeRedirect />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<RegistrationForm />} />
       <Route
         path="/dashboard"
         element={
           <RequireAuth>
             <Dashboard />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/profiles"
+        element={
+          <RequireAuth>
+            <Profiles />
           </RequireAuth>
         }
       />

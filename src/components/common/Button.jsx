@@ -9,7 +9,8 @@ const Button = ({
     className = '',             // Clases adicionales personalizadas
     iconLeft = null,            // Ícono opcional a la izquierda
     iconRight = null,           // Ícono opcional a la derecha
-    rounded = 'full'            // Bordes redondeados (sm, md, lg, full)
+    rounded = 'full',           // Bordes redondeados (sm, md, lg, full)
+    type = 'button'
 }) => {
 
     // Genera dinámicamente las clases de color usando TailwindCSS
@@ -74,6 +75,7 @@ const Button = ({
 
     return (
         <button
+            type={type}
             onClick={onClick}             // Acción al hacer clic
             disabled={disabled}           // Estado deshabilitado
             className={combinedClass}     // Clases combinadas

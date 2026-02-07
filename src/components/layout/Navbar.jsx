@@ -54,6 +54,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-1 border-r border-beige-calido pr-4">
                     <Link title="Inicio" to="/" className="p-2 text-gris-carbon hover:text-rosado-principal transition-colors"><FaHome size={20} /></Link>
                     <Link title="Explorar" to="/explore" className="p-2 text-gris-carbon hover:text-rosado-principal transition-colors"><FaCompass size={20} /></Link>
+                    <Link title="Perfiles" to="/profiles" className="p-2 text-gris-carbon hover:text-rosado-principal transition-colors"><FaUser size={20} /></Link>
                     <div className="relative p-2 cursor-pointer group">
                         <IoMdNotifications size={22} className="text-lavanda-profundo group-hover:text-rosado-principal transition-colors" />
                         <span className="absolute top-1 right-1 bg-cute-amarillo text-white text-[10px] rounded-full w-4 h-4 flex items-center justify-center font-bold">3</span>
@@ -96,10 +97,10 @@ const Navbar = () => {
                                 </p>
                             </div>
                         </div>
-                        <a href="/" className="flex items-center gap-2 px-4 py-3 text-gris-carbon hover:bg-beige-calido font-quicksand rounded-xl">
+                        <Link to="/profiles" className="flex items-center gap-2 px-4 py-3 text-gris-carbon hover:bg-beige-calido font-quicksand rounded-xl">
                             <FaUser className="text-rosado-principal" size={14} />
                             Mi perfil
-                        </a>
+                        </Link>
                         <a href="/" className="flex items-center gap-2 px-4 py-3 text-gris-carbon hover:bg-beige-calido font-quicksand rounded-xl">
                             <FaCog className="text-lavanda-profundo" size={14} />
                             Configuración
@@ -144,12 +145,15 @@ const Navbar = () => {
                         </div>
 
                         {/* Enlaces móviles */}
-                        <div className="grid grid-cols-2 gap-3">
+                        <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
                             <Link onClick={toggleMenu} to="/" className="flex items-center gap-3 p-3 rounded-xl bg-white border border-beige-calido font-nunito font-bold text-gris-carbon">
                                 <FaHome className="text-rosado-principal" /> Inicio
                             </Link>
                             <Link onClick={toggleMenu} to="/explore" className="flex items-center gap-3 p-3 rounded-xl bg-white border border-beige-calido font-nunito font-bold text-gris-carbon">
                                 <FaCompass className="text-lavanda-profundo" /> Explorar
+                            </Link>
+                            <Link onClick={toggleMenu} to="/profiles" className="flex items-center gap-3 p-3 rounded-xl bg-white border border-beige-calido font-nunito font-bold text-gris-carbon">
+                                <FaUser className="text-rosado-principal" /> Perfiles
                             </Link>
                         </div>
 
