@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import Input from '../components/common/Input.jsx';
 import Button from '../components/common/Button.jsx';
 import { useAuth } from '../context/AuthContext';
+import { ROUTES } from '../constants/routes';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -19,7 +20,7 @@ const Login = () => {
             setErrorMessage(result.message);
             return;
         }
-        navigate('/dashboard');
+        navigate(ROUTES.DASHBOARD);
     };
 
     return (
@@ -120,7 +121,7 @@ const Login = () => {
                 <div className="text-center text-xs sm:text-sm text-gris-carbon">
                     <p>
                         ¿No tienes una cuenta?{' '}
-                        <Link to="/register" className="font-bold text-sakura-oscuro hover:underline">
+                        <Link to={ROUTES.REGISTER} className="font-bold text-sakura-oscuro hover:underline">
                             Regístrate aquí
                         </Link>
                     </p>

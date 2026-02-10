@@ -1,8 +1,9 @@
 import React from 'react';
 import Navbar from '../components/layout/Navbar.jsx';
 import Footer from '../components/layout/Footer.jsx';
-import fondoAmigurumi from '../assets/images/fondoAmigurumi.png';
+import fondoAmigurumi from '../assets/images/AmigurumiFondo3.png';
 import { FaHeart, FaLightbulb, FaUsers, FaGlobe, FaHandshake } from 'react-icons/fa';
+
 
 const images = {
     mision: 'https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&q=80&w=1000',
@@ -13,7 +14,7 @@ const AboutUs = () => (
     <div
         className="min-h-screen flex flex-col font-quicksand"
         style={{
-            backgroundImage: `radial-gradient(circle at center, rgba(255, 255, 255, 0.9) 0%, rgba(242, 233, 216, 0.8) 50%), url(${fondoAmigurumi})`,
+            backgroundImage: `linear-gradient(rgba(255, 255, 255, 0.85), rgba(255, 255, 255, 0.85)), url(${fondoAmigurumi})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundAttachment: 'fixed'
@@ -58,35 +59,35 @@ const AboutUs = () => (
                     </div>
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
-                        <ValorCard 
-                            icon={<FaLightbulb />} 
-                            title="Creatividad" 
-                            desc="Transformamos ideas en diseños únicos con energía positiva." 
-                            color="bg-cute-amarillo" 
+                        <ValorCard
+                            icon={<FaLightbulb />}
+                            title="Creatividad"
+                            desc="Transformamos ideas en diseños únicos con energía positiva."
+                            color="bg-cute-amarillo"
                         />
-                        <ValorCard 
-                            icon={<FaHandshake />} 
-                            title="Colaboración" 
-                            desc="Compartimos recursos y celebramos cada alianza." 
-                            color="bg-cute-verde" 
+                        <ValorCard
+                            icon={<FaHandshake />}
+                            title="Colaboración"
+                            desc="Compartimos recursos y celebramos cada alianza."
+                            color="bg-cute-verde"
                         />
-                        <ValorCard 
-                            icon={<FaHeart />} 
-                            title="Calidez" 
-                            desc="El respeto y la ternura guían cada conversación." 
-                            color="bg-rosado-claro" 
+                        <ValorCard
+                            icon={<FaHeart />}
+                            title="Calidez"
+                            desc="El respeto y la ternura guían cada conversación."
+                            color="bg-rosado-claro"
                         />
-                        <ValorCard 
-                            icon={<FaUsers />} 
-                            title="Inclusión" 
-                            desc="Todos los perfiles, técnicas y culturas son bienvenidos." 
-                            color="bg-cute-azul" 
+                        <ValorCard
+                            icon={<FaUsers />}
+                            title="Inclusión"
+                            desc="Todos los perfiles, técnicas y culturas son bienvenidos."
+                            color="bg-cute-azul"
                         />
-                        <ValorCard 
-                            icon={<FaGlobe />} 
-                            title="Variedad" 
-                            desc="Celebramos estilos globales y narrativas diversas." 
-                            color="bg-lavanda-base" 
+                        <ValorCard
+                            icon={<FaGlobe />}
+                            title="Variedad"
+                            desc="Celebramos estilos globales y narrativas diversas."
+                            color="bg-lavanda-base"
                         />
                     </div>
                 </section>

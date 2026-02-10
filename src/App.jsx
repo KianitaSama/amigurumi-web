@@ -10,28 +10,30 @@ import AboutUs from "./pages/AboutUs";
 import Privacidad from "./pages/Privacidad";
 import Terms from "./pages/Terms";
 import Settings from "./pages/Settings";
+import { ROUTES, BASE_PATH } from "./constants/routes";
 
 const RequireAuth = ({ children }) => {
   const { user } = useAuth();
   if (!user) {
-    return <Navigate to="/login" replace />;
+    return <Navigate to={ROUTES.LOGIN} replace />;
   }
   return children;
 };
 
 const HomeRedirect = () => {
   const { user } = useAuth();
-  return <Navigate to={user ? "/dashboard" : "/login"} replace />;
+  return <Navigate to={user ? ROUTES.DASHBOARD : ROUTES.LOGIN} replace />;
 };
 
 function App() {
   return (
     <Routes>
-      <Route path="/" element={<HomeRedirect />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/register" element={<RegistrationForm />} />
+      <Route path="/" element={<Navigate to={BASE_PATH} replace />} />
+      <Route path={BASE_PATH} element={<HomeRedirect />} />
+      <Route path={ROUTES.LOGIN} element={<Login />} />
+      <Route path={ROUTES.REGISTER} element={<RegistrationForm />} />
       <Route
-        path="/dashboard"
+        path={ROUTES.DASHBOARD}
         element={
           <RequireAuth>
             <Dashboard />
@@ -39,7 +41,7 @@ function App() {
         }
       />
       <Route
-        path="/profiles"
+        path={ROUTES.PROFILES}
         element={
           <RequireAuth>
             <Profiles />
@@ -47,26 +49,26 @@ function App() {
         }
       />
       <Route
-        path="/ecplorer"
+        path={ROUTES.EXPLORE}
         element={
           <RequireAuth>
             <Explore />
           </RequireAuth>
         }
       />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/AboutUS" element={<AboutUs />} />
-      <Route path="/privacidad" element={<Privacidad />} />
-      <Route path="/terminos" element={<Terms />} />
+      <Route path={ROUTES.CONTACT} element={<Contact />} />
+      <Route path={ROUTES.ABOUT} element={<AboutUs />} />
+      <Route path={ROUTES.PRIVACY} element={<Privacidad />} />
+      <Route path={ROUTES.TERMS} element={<Terms />} />
       <Route
-        path="/settings"
+        path={ROUTES.SETTINGS}
         element={
           <RequireAuth>
             <Settings />
           </RequireAuth>
         }
       />
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to={BASE_PATH} replace />} />
     </Routes>
   );
 }

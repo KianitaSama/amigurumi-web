@@ -3,6 +3,7 @@ import { FaBars, FaTimes, FaSearch, FaPlus, FaHome, FaCompass, FaUser, FaHeart, 
 import { IoMdNotifications } from 'react-icons/io';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
+import { ROUTES } from '../../constants/routes';
 
 const Navbar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -17,13 +18,13 @@ const Navbar = () => {
     const handleLogout = () => {
         logout();
         setIsMenuOpen(false);
-        navigate('/login');
+        navigate(ROUTES.LOGIN);
     };
 
     return (
         <nav className="bg-white/80 backdrop-blur-md sticky top-0 z-50 p-3 md:px-6 flex items-center justify-between border-b border-sakura-oscuro/10 shadow-sm">
             
-            <Link to="/" className="flex items-center gap-3 group shrink-0">
+            <Link to={ROUTES.BASE} className="flex items-center gap-3 group shrink-0">
                 <div className="w-10 h-10 bg-gradient-to-br from-rosado-principal to-sakura-oscuro rounded-xl flex items-center justify-center shadow-sm group-hover:rotate-6 transition-transform">
                     <span className="text-white font-pacifico text-xl">✿</span>
                 </div>
@@ -48,8 +49,8 @@ const Navbar = () => {
 
             <div className="hidden md:flex items-center gap-4">
                 <div className="flex items-center gap-2 border-r border-beige-calido pr-4">
-                    <Link title="Inicio" to="/" className="p-2 text-gris-carbon hover:text-rosado-principal transition-colors"><FaHome size={20} /></Link>
-                    <Link title="Explorar" to="/ecplorer" className="p-2 text-gris-carbon hover:text-rosado-principal transition-colors"><FaCompass size={20} /></Link>
+                    <Link title="Inicio" to={ROUTES.DASHBOARD} className="p-2 text-gris-carbon hover:text-rosado-principal transition-colors"><FaHome size={20} /></Link>
+                    <Link title="Explorar" to={ROUTES.EXPLORE} className="p-2 text-gris-carbon hover:text-rosado-principal transition-colors"><FaCompass size={20} /></Link>
                 
                     
                     <div className="relative flex items-center justify-center w-10 h-10">
@@ -126,10 +127,10 @@ const Navbar = () => {
                     <img src={avatarSrc} alt={avatarAlt} className="w-10 h-10 rounded-full border-2 border-white shadow-sm ring-2 ring-rosado-principal/10" />
                     
                     <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-xl border border-beige-calido opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
-                        <Link to="/profiles" className="flex items-center gap-2 px-4 py-3 text-xs text-gris-carbon hover:bg-rose-50 transition-colors">
+                        <Link to={ROUTES.PROFILES} className="flex items-center gap-2 px-4 py-3 text-xs text-gris-carbon hover:bg-rose-50 transition-colors">
                             <FaUser size={12} className="text-rosado-principal" /> Mi Perfil
                         </Link>
-                        <Link to="/settings" className="flex items-center gap-2 px-4 py-3 text-xs text-gris-carbon hover:bg-rose-50 transition-colors">
+                        <Link to={ROUTES.SETTINGS} className="flex items-center gap-2 px-4 py-3 text-xs text-gris-carbon hover:bg-rose-50 transition-colors">
                             <FaCog size={12} className="text-rosado-principal" /> Configuración
                         </Link>
                         <button onClick={handleLogout} className="w-full text-left flex items-center gap-2 px-4 py-3 text-xs text-cute-rojo hover:bg-rose-50 border-t border-beige-calido font-bold transition-colors">

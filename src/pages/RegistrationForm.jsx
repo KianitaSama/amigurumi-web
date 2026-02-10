@@ -6,6 +6,7 @@ import Modal from '../components/common/Modal.jsx';
 import { useAuth } from '../context/AuthContext';
 import { FaUser, FaEnvelope, FaLock, FaCamera } from 'react-icons/fa'; 
 import { IoMdHeart } from 'react-icons/io';
+import { ROUTES } from '../constants/routes';
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -60,7 +61,7 @@ const Register = () => {
 
         successRef.current = setTimeout(() => {
             setIsModalOpen(false);
-            navigate('/login');
+            navigate(ROUTES.LOGIN);
         }, 7000);
     };
 
@@ -179,7 +180,7 @@ const Register = () => {
                     <div className="text-center">
                         <p className="text-xs text-gris-carbon/60">
                             ¿Ya eres parte del club?{' '}
-                            <Link to="/login" className="font-bold text-lavanda-profundo hover:text-rosado-principal">
+                            <Link to={ROUTES.LOGIN} className="font-bold text-lavanda-profundo hover:text-rosado-principal">
                                 Inicia sesión
                             </Link>
                         </p>

@@ -8,7 +8,7 @@ import iconoZorro from '../assets/icons/iconoZorro.png';
 import { useAuth } from '../context/AuthContext.jsx';
 import {
     FaUser, FaLock, FaShieldAlt,
-    FaPalette, FaMapMarkerAlt, FaHeart, FaGlobeAmericas, FaIdCard
+    FaPalette, FaMapMarkerAlt, FaHeart, FaGlobeAmericas, FaIdCard, FaUsers, FaChartLine
 } from 'react-icons/fa';
 
 const Settings = () => {
@@ -24,6 +24,21 @@ const Settings = () => {
         { id: 'cuenta', label: 'Ubicación', icon: <FaMapMarkerAlt /> },
         { id: 'privacidad', label: 'Seguridad', icon: <FaShieldAlt /> },
         { id: 'preferencias', label: 'Mi Mood', icon: <FaPalette /> },
+    ];
+
+    const adminStats = [
+        {
+            label: 'Nuevas creaciones',
+            value: '18',
+            detail: 'En revisión para la vitrina',
+            icon: <FaChartLine className="text-rosado-principal text-2xl" />
+        },
+        {
+            label: 'Soporte respondido',
+            value: '98%',
+            detail: 'Resuelto en la última semana',
+            icon: <FaUsers className="text-rosado-principal text-2xl" />
+        }
     ];
 
     const inputClass = "w-full px-5 py-3 rounded-2xl border-2 border-beige-calido bg-white outline-none transition-all duration-300 text-sm font-medium focus:border-rosado-principal focus:ring-4 focus:ring-rosado-principal/10 placeholder:text-gris-carbon/30 shadow-sm";
@@ -89,6 +104,26 @@ const Settings = () => {
                                             </div>
                                         </div>
                                     </div>
+
+                                    {user?.role === 'admin' && (
+                                        <div className="space-y-6">
+                                            <p className="text-[11px] uppercase tracking-[0.5em] text-gris-carbon/60">Estadísticas del taller</p>
+                                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                                                {adminStats.map((stat) => (
+                                                    <div key={stat.label} className="p-5 rounded-[2rem] bg-white/80 border border-beige-calido shadow-inner flex gap-4 items-center">
+                                                        <div className="p-3 bg-rosado-principal/10 rounded-2xl">
+                                                            {stat.icon}
+                                                        </div>
+                                                        <div>
+                                                            <p className="text-2xl font-pacifico text-gris-carbon">{stat.value}</p>
+                                                            <p className="text-[11px] uppercase tracking-[0.3em] text-gris-carbon/60">{stat.label}</p>
+                                                            <p className="text-[10px] text-gris-carbon/50">{stat.detail}</p>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )}
                                     <div className="flex flex-col md:flex-row gap-8 items-center border-b border-beige-calido pb-8">
                                         <div className="flex-1 space-y-4 w-full">
                                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

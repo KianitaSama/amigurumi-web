@@ -1,6 +1,8 @@
 import React from 'react';
 import { FaInstagram, FaFacebookF, FaPinterest, FaHeart } from 'react-icons/fa';
 import { FaXTwitter } from 'react-icons/fa6'; // Esta es la única línea para XTwitter
+import { Link } from 'react-router-dom';
+import { ROUTES } from '../../constants/routes';
 
 const Footer = () => {
     return (
@@ -17,19 +19,19 @@ const Footer = () => {
                     </div>
 
                     <nav className="flex items-center gap-6">
-                        <a href="/AboutUS" className="text-[11px] uppercase tracking-widest text-cute-gris hover:text-sakura-oscuro transition-colors font-bold border-b-2 border-transparent hover:border-sakura-claro">
+                        <Link to={ROUTES.ABOUT} className="text-[11px] uppercase tracking-widest text-cute-gris hover:text-sakura-oscuro transition-colors font-bold border-b-2 border-transparent hover:border-sakura-claro">
                             Nosotros
-                        </a>
-                        <a href="/contact" className="text-[11px] uppercase tracking-widest text-cute-gris hover:text-sakura-oscuro transition-colors font-bold border-b-2 border-transparent hover:border-sakura-claro">
+                        </Link>
+                        <Link to={ROUTES.CONTACT} className="text-[11px] uppercase tracking-widest text-cute-gris hover:text-sakura-oscuro transition-colors font-bold border-b-2 border-transparent hover:border-sakura-claro">
                             Contacto
-                        </a>
+                        </Link>
                         <span className="text-beige-calido">|</span>
-                        <a href="/privacidad" className="text-[10px] uppercase tracking-widest text-cute-gris/60 hover:text-sakura-oscuro transition-colors font-medium">
+                        <Link to={ROUTES.PRIVACY} className="text-[10px] uppercase tracking-widest text-cute-gris/60 hover:text-sakura-oscuro transition-colors font-medium">
                             Privacidad
-                        </a>
-                        <a href="/terminos" className="text-[10px] uppercase tracking-widest text-cute-gris/60 hover:text-sakura-oscuro transition-colors font-medium">
+                        </Link>
+                        <Link to={ROUTES.TERMS} className="text-[10px] uppercase tracking-widest text-cute-gris/60 hover:text-sakura-oscuro transition-colors font-medium">
                             Términos y Condiciones
-                        </a>
+                        </Link>
                     </nav>
 
                     <div className="flex items-center gap-6">
