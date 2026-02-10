@@ -1,17 +1,25 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom'; // Assuming you'll use React Router
-import Input from '../components/common/Input.jsx'; // Componente Input reutilizable
-import Button from '../components/common/Button.jsx'; // Componente Button reutilizable
+import { Link, useNavigate } from 'react-router-dom';
+import Input from '../components/common/Input.jsx';
+import Button from '../components/common/Button.jsx';
+import { useAuth } from '../context/AuthContext';
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showCreds, setShowCreds] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleLogin = (e) => {
         e.preventDefault();
-        // Lógica de inicio de sesión aquí
-        alert(`Iniciando sesión con: ${email}`);
+        const result = login(email, password);
+        if (!result.success) {
+            setErrorMessage(result.message);
+            return;
+        }
+        navigate('/dashboard');
     };
 
     return (
@@ -89,6 +97,11 @@ const Login = () => {
                     </Button>
                 </form>
 
+                {errorMessage && (
+                    <div className="bg-rosado-claro/20 border border-rosado-principal/30 text-rosado-principal text-xs p-3 rounded-xl text-center animate-bounce">
+                        {errorMessage}
+                    </div>
+                )}
                     <div className="flex items-center my-4 gap-3">
                         <hr className="flex-grow border-t border-gray-300" />
                         <span className="px-4 text-sm text-gray-500">O</span>

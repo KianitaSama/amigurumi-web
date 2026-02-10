@@ -4,6 +4,7 @@ import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Profiles from "./pages/Profiles";
 import RegistrationForm from "./pages/RegistrationForm";
+import Explore from "./pages/Explore";
 
 const RequireAuth = ({ children }) => {
   const { user } = useAuth();
@@ -37,6 +38,14 @@ function App() {
         element={
           <RequireAuth>
             <Profiles />
+          </RequireAuth>
+        }
+      />
+      <Route
+        path="/explorer"
+        element={
+          <RequireAuth>
+            <Explore />
           </RequireAuth>
         }
       />

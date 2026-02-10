@@ -100,8 +100,8 @@ const Register = () => {
 
                 <div className="bg-white/90 backdrop-blur-md p-8 rounded-[2.5rem] shadow-2xl border border-white/50 space-y-6">
                     <div className="text-center space-y-2">
-                        <h1 className="text-4xl font-pacifico text-lavanda-profundo">Únete al Club</h1>
-                        <p className="text-gris-carbon/60 text-sm">Crea tu perfil y empieza a compartir tus puntos</p>
+                        <h1 className="text-4xl font-pacifico text-lavanda-profundo">Registrate</h1>
+                        <p className="text-gris-carbon/60 text-sm">Construye tu perfil y comparte tus patrones y hilos favoritos con la comunidad</p>
                     </div>
 
                     {error && (
@@ -111,14 +111,6 @@ const Register = () => {
                     )}
 
                     <form onSubmit={handleRegister} className="space-y-4">
-                        <div className="flex justify-center mb-4">
-                            <div className="relative group cursor-pointer">
-                                <div className="w-20 h-20 rounded-2xl bg-beige-calido flex items-center justify-center border-2 border-dashed border-rosado-principal/40 group-hover:bg-rosado-claro/20 transition-colors">
-                                    <FaCamera className="text-rosado-principal/50 text-2xl" />
-                                </div>
-                                <span className="absolute -bottom-2 -right-2 bg-white shadow-sm rounded-full p-1 text-[10px] text-gris-carbon font-bold border border-beige-calido">Subir</span>
-                            </div>
-                        </div>
 
                         <div className="space-y-3">
                             <div className="relative">

@@ -16,8 +16,8 @@ const Profile = () => {
     const isAdmin = user.role === 'admin';
 
     const profileData = {
-        name: isAdmin ? "Admin Mágico" : (user.displayName || "Lulu Campos"),
-        role: isAdmin ? "Guardián de Hebras" : "Tejedora de Sueños",
+        name: isAdmin ? "Administrador" : (user.displayName || "Lulu Campos"),
+        role: isAdmin ? "Lourdes" : "Maria Tejedora",
         avatar: isAdmin ? iconoZorro : iconoOsito,
         bio: isAdmin 
             ? "Vigilando que cada puntada del código sea perfecta y los hilos fluyan sin nudos." 
@@ -41,10 +41,8 @@ const Profile = () => {
 
                 <div className="max-w-4xl mx-auto relative z-10">
                     
-                    {/* --- CABECERA ESTILO "FOTO POLAROID" --- */}
                     <div className="flex flex-col items-center mb-16">
                         <div className="relative group">
-                            {/* Marco de foto con rotación manual */}
                             <div className="bg-white p-4 pb-12 shadow-xl transform -rotate-2 group-hover:rotate-0 transition-transform duration-500 border border-beige-calido">
                                 <img 
                                     src={profileData.avatar} 
@@ -55,8 +53,7 @@ const Profile = () => {
                                     {isAdmin ? "#El jefe" : "#Hecho a mano"}
                                 </div>
                             </div>
-                            {/* Washi Tape (Cinta decorativa arriba de la foto) */}
-                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-24 h-8 bg-rosado-principal/30 backdrop-blur-sm -rotate-3 border-x border-rosado-principal/20 z-20"></div>
+                            <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-24 h-8 bg-rosado-principal/40 backdrop-blur-sm -rotate-3 border-x border-rosado-principal/20 z-20"></div>
                         </div>
 
                         <div className="text-center mt-8 space-y-2">
