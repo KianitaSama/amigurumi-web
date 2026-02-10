@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaBars, FaTimes, FaSearch, FaPlus, FaHome, FaCompass, FaUser, FaHeart, FaCommentDots, FaChartLine, FaSignOutAlt } from 'react-icons/fa';
+import { FaBars, FaTimes, FaSearch, FaPlus, FaHome, FaCompass, FaUser, FaHeart, FaCommentDots, FaChartLine, FaSignOutAlt, FaCog } from 'react-icons/fa';
 import { IoMdNotifications } from 'react-icons/io';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -49,7 +49,8 @@ const Navbar = () => {
             <div className="hidden md:flex items-center gap-4">
                 <div className="flex items-center gap-2 border-r border-beige-calido pr-4">
                     <Link title="Inicio" to="/" className="p-2 text-gris-carbon hover:text-rosado-principal transition-colors"><FaHome size={20} /></Link>
-                    <Link title="Explorar" to="/explorer" className="p-2 text-gris-carbon hover:text-rosado-principal transition-colors"><FaCompass size={20} /></Link>
+                    <Link title="Explorar" to="/ecplorer" className="p-2 text-gris-carbon hover:text-rosado-principal transition-colors"><FaCompass size={20} /></Link>
+                
                     
                     <div className="relative flex items-center justify-center w-10 h-10">
                         <button
@@ -118,15 +119,18 @@ const Navbar = () => {
                 <div className="relative group flex items-center gap-3 pl-2 cursor-pointer">
                     <div className="flex flex-col items-end leading-none">
                         <span className="text-[9px] uppercase tracking-[0.2em] text-rosado-principal font-black">
-                            {user?.role === 'admin' ? 'Curadora' : 'Artista'}
+                            {user?.role === 'admin' ? 'Administradora' : 'Artista'}
                         </span>
                         <span className="text-sm font-nunito font-bold text-gris-carbon">{user?.name || 'Lulu'}</span>
                     </div>
                     <img src={avatarSrc} alt={avatarAlt} className="w-10 h-10 rounded-full border-2 border-white shadow-sm ring-2 ring-rosado-principal/10" />
                     
-                    <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-2xl shadow-xl border border-beige-calido opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
+                    <div className="absolute right-0 top-full mt-2 w-56 bg-white rounded-2xl shadow-xl border border-beige-calido opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 overflow-hidden">
                         <Link to="/profiles" className="flex items-center gap-2 px-4 py-3 text-xs text-gris-carbon hover:bg-rose-50 transition-colors">
                             <FaUser size={12} className="text-rosado-principal" /> Mi Perfil
+                        </Link>
+                        <Link to="/settings" className="flex items-center gap-2 px-4 py-3 text-xs text-gris-carbon hover:bg-rose-50 transition-colors">
+                            <FaCog size={12} className="text-rosado-principal" /> Configuración
                         </Link>
                         <button onClick={handleLogout} className="w-full text-left flex items-center gap-2 px-4 py-3 text-xs text-cute-rojo hover:bg-rose-50 border-t border-beige-calido font-bold transition-colors">
                             <FaSignOutAlt size={12} /> Cerrar Sesión
