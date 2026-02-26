@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import Dashboard from "./pages/Dashboard";
+import HandlePublish from "./pages/HandlePublish";
 import Login from "./pages/Login";
 import Profiles from "./pages/Profiles";
 import RegistrationForm from "./pages/RegistrationForm";
@@ -40,6 +41,14 @@ function App() {
           </RequireAuth>
         }
       />
+        <Route
+          path={ROUTES.PUBLICATION}
+          element={
+            <RequireAuth>
+              <HandlePublish />
+            </RequireAuth>
+          }
+        />
       <Route
         path={ROUTES.PROFILES}
         element={

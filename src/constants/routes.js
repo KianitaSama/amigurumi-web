@@ -11,5 +11,8 @@ export const ROUTES = {
   ABOUT: `${BASE_PATH}/AboutUS`,
   PRIVACY: `${BASE_PATH}/privacidad`,
   TERMS: `${BASE_PATH}/terminos`,
-  SETTINGS: `${BASE_PATH}/settings`
+  SETTINGS: `${BASE_PATH}/settings`,
+  PUBLICATION: `${BASE_PATH}/publicacion/:publicationId`
 };
+
+export const publicationPath = (publicationId) => `${BASE_PATH}/publicacion/${publicationId}`;

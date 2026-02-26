@@ -1,66 +1,71 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { motion } from 'framer-motion';
 import Navbar from '../components/layout/Navbar.jsx';
 import Footer from '../components/layout/Footer.jsx';
 import fondoAmigurumi from '../assets/images/fondoAmigurumi.png';
+import Input from '../components/common/Input.jsx';
+import Button from '../components/common/Button.jsx';
+import { Link } from 'react-router-dom';
+import { ROUTES, publicationPath } from '../constants/routes';
+import { pins } from '../constants/pins';
 
-const pins = [
-    {
-        id: 'p1',
-        type: 'profile', // Identificador para la card de perfil
-    },
-    {
-        id: '1',
-        title: 'Jardín de amigurumis',
-        description: 'Texturas y granulados suaves para tus patrones más dulces.',
-        image: '/src/assets/images/f1.png',
-        accent: 'from-rosado-principal/20',
-        tags: ['#amigurumi', '#soft']
-    },
-    {
-        id: '2',
-        title: 'Texturas guardadas',
-        description: 'Los favoritos de la comunidad, con hilos naturales y dorados.',
-        image: '/src/assets/images/f2.png',
-        accent: 'from-verde-sage/20',
-        tags: ['#natural', '#crochet']
-    },
-    {
-        id: '3',
-        title: 'Calendario 2024',
-        description: 'Planifica tus próximas publicaciones y colabora.',
-        image: '/src/assets/images/f3.png',
-        accent: 'from-lavanda-profundo/20',
-        tags: ['#planner', '#hechoamano']
-    },
-    {
-        id: '4',
-        title: 'Moodboard Otoñal',
-        description: 'Paleta de colores tierra para la nueva colección.',
-        image: '/src/assets/images/f4.png',
-        accent: 'from-verde-bosque/20',
-        tags: ['#autumn', '#yarn']
-    },
-    {
-        id: '5',
-        title: 'Miniaturas Kawaii',
-        description: 'Patrones gratuitos para crear mini animalitos.',
-        image: '/src/assets/images/f5.png',
-        accent: 'from-rosado-oscuro/20',
-        tags: ['#kawaii', '#diy']
-    },
-    {
-        id: '6',
-        title: 'Workshop Presencial',
-        description: '¡Nos vemos este sábado para tejer juntas!',
-        image: '/src/assets/images/f1.png',
-        accent: 'from-beige-calido/30',
-        tags: ['#comunidad', '#tejer']
-    }
+const techniqueOptions = [
+    { id: 'punto_medio_alto', label: 'Punto Medio Alto' },
+    { id: 'anillo_magico', label: 'Anillo Mágico' },
+    { id: 'punto_tunecino', label: 'Punto Tunecino' },
+    { id: 'jacquard_intarsia', label: 'Jacquard / Intarsia' },
+    { id: 'punto_salomon', label: 'Punto Salomón (Espuma de Mar)' },
+    { id: 'aumento_disminucion', label: 'Aumentos e Invisibles' },
+    { id: 'punto_bobos', label: 'Punto Bobo / Santa Clara' },
+    { id: 'bordado_sobre_tejido', label: 'Bordado en Relieve' }
 ];
 
 const Dashboard = () => {
+
+    const [description, setDescription] = useState('');
+    const [hashtags, setHashtags] = useState('');
+    const [selectedTechniques, setSelectedTechniques] = useState(['amigurumi']);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedImageName, setSelectedImageName] = useState('');
+
+    const parsedHashtags = hashtags
+        .split(',')
+        .map(item => item.trim())
+        .filter(Boolean)
+        .map((tag) => (tag.startsWith('#') ? tag : `#${tag}`));
+
+    const toggleTechnique = (techniqueId) => {
+        setSelectedTechniques((prev) =>
+            prev.includes(techniqueId)
+                ? prev.filter((id) => id !== techniqueId)
+                : [...prev, techniqueId]
+        );
+    };
+
+    const clearForm = () => {
+        setDescription('');
+        setHashtags('');
+        setSelectedTechniques(['amigurumi']);
+        setSelectedImageName('');
+    };
+
+    const handleImageChange = (event) => {
+        const file = event.target.files?.[0];
+        setSelectedImageName(file?.name ?? '');
+    };
+
+    const handlePublish = (event) => {
+        event.preventDefault();
+        console.log('Publicación nueva', {
+            description,
+            hashtags: parsedHashtags,
+            selectedTechniques
+        });
+        clearForm();
+        setIsModalOpen(false);
+    };
+    
     const { user } = useAuth();
     console.log('user.role', user?.role);
     if (!user) return null;
@@ -77,7 +82,155 @@ const Dashboard = () => {
         >
             <Navbar />
             
-            <main className="flex-1 px-4 py-12 sm:px-8">
+            <main className="flex-1 px-4 py-12 sm:px-8 space-y-10">
+             
+                {isModalOpen && (
+                    <div className="fixed inset-0 z-50 flex items-center justify-center px-4">
+                        <div
+                            className="absolute inset-0 bg-black/40 backdrop-blur-sm"
+                            onClick={() => setIsModalOpen(false)}
+                        ></div>
+                        <motion.div
+    initial={{ opacity: 0, scale: 0.95 }}
+    animate={{ opacity: 1, scale: 1 }}
+    className="relative z-10 w-full max-w-4xl rounded-3xl border border-rosado-principal/40 bg-[#fff6fb] p-6 shadow-2xl"
+    onClick={(event) => event.stopPropagation()}
+>
+    <div className="flex items-center justify-between mb-4">
+        <div className="flex-1">
+            <h3 className="text-2xl font-pacifico text-verde-bosque text-center">
+                Gestión de Publicación
+            </h3>
+        </div>
+        <button
+            type="button"
+            onClick={() => setIsModalOpen(false)}
+            className="text-gris-carbon/70 hover:text-gris-carbon text-sm font-medium"
+        >
+            Cerrar
+        </button>
+    </div>
+
+    <form onSubmit={handlePublish} className="space-y-5">
+        {/* Descripción Técnica */}
+        <div className="space-y-2">
+            <label htmlFor="description" className="text-sm font-semibold text-gris-carbon">
+                Detalles del Proyecto
+            </label>
+            <textarea
+                id="description"
+                value={description}
+                onChange={(event) => setDescription(event.target.value)}
+                rows={4}
+                placeholder="Describa el proceso técnico, el tipo de fibra utilizado o la estructura del patrón..."
+                className="w-full rounded-3xl border-2 border-dashed border-rosado-principal/40 bg-white/90 px-4 py-3 text-gray-700 placeholder-gris-carbon/50 focus:outline-none focus:ring-4 focus:ring-rosado-principal/30 transition"
+            />
+        </div>
+
+        {/* Etiquetas / Hashtags */}
+        <div className="space-y-2">
+            <label htmlFor="hashtags" className="text-sm font-semibold text-gris-carbon">
+                Etiquetas de Clasificación
+            </label>
+            <Input
+                id="hashtags"
+                value={hashtags}
+                onChange={(event) => setHashtags(event.target.value)}
+                placeholder="#PuntoSalomon, #TecnicaJacquard, #TejidoErgonomico"
+                borderColor="border-rosado-principal/30"
+                className="bg-white"
+            />
+            {parsedHashtags.length > 0 && (
+                <div className="flex flex-wrap gap-2 text-[11px] text-gris-carbon/70">
+                    {parsedHashtags.map((tag) => (
+                        <span
+                            key={tag}
+                            className="rounded-full border border-rosado-principal/30 px-3 py-1 bg-white/50"
+                        >
+                            {tag}
+                        </span>
+                    ))}
+                </div>
+            )}
+        </div>
+
+        {/* Carga de Archivos */}
+        <div className="space-y-2">
+            <p className="text-sm font-semibold text-gris-carbon">
+                Imagen Principal
+            </p>
+            <label
+                htmlFor="coverImage"
+                className="flex items-center justify-between rounded-2xl border-2 border-dashed border-rosado-principal/50 bg-white/80 px-4 py-3 text-sm text-gris-carbon/70 transition hover:border-rosado-principal cursor-pointer"
+            >
+                <span>Cargar archivo desde el dispositivo</span>
+                <span className="text-[11px] font-bold text-rosado-principal">FORMATO JPG / PNG</span>
+            </label>
+            <input
+                id="coverImage"
+                type="file"
+                accept="image/*"
+                className="sr-only"
+                onChange={handleImageChange}
+            />
+            {selectedImageName && (
+                <p className="text-[11px] italic text-rosado-principal/80">
+                    Archivo seleccionado: {selectedImageName}
+                </p>
+            )}
+        </div>
+
+        {/* Técnicas de Bordado y Tejido */}
+        <div className="space-y-2">
+            <p className="text-sm font-semibold text-gris-carbon">
+                Especificaciones de Técnica
+            </p>
+            <div className="flex flex-wrap gap-3">
+                {/* Asegúrate de que técnicaOptions use etiquetas como: 
+                    "Punto Medio Alto", "Punto Red", "Anillo Mágico", "Punto Deslizado" 
+                */}
+                {techniqueOptions.map((technique) => {
+                    const isActive = selectedTechniques.includes(technique.id);
+                    return (
+                        <button
+                            type="button"
+                            key={technique.id}
+                            onClick={() => toggleTechnique(technique.id)}
+                            className={`px-4 py-2 rounded-full text-xs font-semibold transition border ${
+                                isActive
+                                    ? 'border-rosado-principal bg-rosado-principal/20 text-rosado-principal'
+                                    : 'border-rosado-principal/30 text-gris-carbon/70'
+                            }`}
+                        >
+                            {technique.label}
+                        </button>
+                    );
+                })}
+            </div>
+        </div>
+
+        {/* Acciones Finales */}
+        <div className="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-rosado-principal/40">
+            <button
+                type="button"
+                onClick={() => setIsModalOpen(false)}
+                className="px-4 py-2 rounded-full border border-rosado-principal/30 text-xs font-semibold text-gris-carbon/70 transition hover:bg-rosado-principal/10 hover:text-rosado-principal"
+            >
+                Descartar Cambios
+            </button>
+            <Button
+                type="submit"
+                color="rosado-principal"
+                className="bg-rosado-principal text-white border-rosado-principal px-6 py-2 shadow-xl font-bold"
+            >
+                Confirmar Publicación
+            </Button>
+        </div>
+    </form>
+</motion.div>
+                    </div>
+                )}
+
                 <div className="mx-auto max-w-7xl columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-6">
                     
                     {pins.map((pin, index) => {
@@ -135,10 +288,23 @@ const Dashboard = () => {
                                                 <span className="text-[10px] text-gris-carbon/40 uppercase tracking-tighter">Siguiendo</span>
                                             </div>
                                         </div>
-                                        
-                                        <button className="w-full bg-gris-carbon text-white text-xs font-bold py-2 rounded-lg hover:bg-lavanda-profundo transition-colors duration-300 shadow-md">
-                                            Editar Perfil
-                                        </button>
+                                        <div className="mt-4 space-y-3">
+                                            <Button
+                                                onClick={() => setIsModalOpen(true)}
+                                                color="rosado-principal"
+                                                variant="ghost"
+                                                size="sm"
+                                                className="w-full border-rosado-principal/40 text-rosado-principal"
+                                            >
+                                                Crear publicación
+                                            </Button>
+                                            <Link
+                                                to={ROUTES.PROFILES}
+                                                className="block w-full bg-gris-carbon text-white text-xs font-bold py-2 rounded-lg hover:bg-lavanda-profundo transition-colors duration-300 shadow-md text-center"
+                                            >
+                                                Editar Perfil
+                                            </Link>
+                                        </div>
                                     </div>
                                 </motion.article>
                             );
@@ -197,6 +363,12 @@ const Dashboard = () => {
                                             </button>
                                         </div>
                                     </div>
+                                    <Link
+                                        to={publicationPath(pin.id)}
+                                        className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-rosado-principal/40 bg-white/80 px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.25em] text-rosado-principal transition hover:bg-rosado-principal/10"
+                                    >
+                                        Ver publicación
+                                    </Link>
                                 </div>
                             </motion.article>
                         );

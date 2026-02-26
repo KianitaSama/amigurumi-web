@@ -2,22 +2,27 @@ import React from 'react';
 
 const Button = ({
     color = 'rosado-principal', // Color por defecto del botón
-    size = 'md',                // Tamaño por defecto (sm, md, lg)
-    onClick,                    // Función que se ejecuta al hacer clic
-    children,                   // Contenido del botón (texto o elementos)
-    disabled = false,           // Estado deshabilitado
-    className = '',             // Clases adicionales personalizadas
-    iconLeft = null,            // Ícono opcional a la izquierda
-    iconRight = null,           // Ícono opcional a la derecha
-    rounded = 'full',           // Bordes redondeados (sm, md, lg, full)
+    variant = 'filled',          // Variante visual (filled, outline, ghost)
+    size = 'md',                 // Tamaño por defecto (sm, md, lg)
+    onClick,                     // Función que se ejecuta al hacer clic
+    children,                    // Contenido del botón (texto o elementos)
+    disabled = false,            // Estado deshabilitado
+    className = '',              // Clases adicionales personalizadas
+    iconLeft = null,             // Ícono opcional a la izquierda
+    iconRight = null,            // Ícono opcional a la derecha
+    rounded = 'full',            // Bordes redondeados (sm, md, lg, full)
     type = 'button'
 }) => {
 
     // Genera dinámicamente las clases de color usando TailwindCSS
-    const getColorClasses = (color) => `border-${color} text-${color} hover:bg-${color}/10`;
+    const variantStyles = {
+        filled: `border-${color} bg-${color} text-white hover:bg-${color}/90`,
+        outline: `border-${color} bg-white text-${color} hover:bg-${color}/10`,
+        ghost: `border-${color} bg-transparent text-${color} hover:bg-${color}/10`
+    };
 
-    // Estilos base del botón kawaii (fondo blanco, tipografía, transiciones)
-    const baseStyles = 'bg-white font-nunito transition-all duration-300 flex items-center justify-center gap-2 font-medium tracking-wide whitespace-nowrap border-2 transform active:scale-95';
+    // Estilos base del botón kawaii (tipografía, transiciones)
+    const baseStyles = 'font-nunito transition-all duration-300 flex items-center justify-center gap-2 font-medium tracking-wide whitespace-nowrap border-2 transform active:scale-95';
 
     // Definimos tamaños con padding y tipografía proporcional
     const sizeStyles = {
@@ -62,16 +67,16 @@ const Button = ({
     );
 
     // Combinamos todas las clases en una sola cadena
-    const combinedClass = `
-    ${baseStyles}
-    ${getColorClasses(color)}
-    ${sizeStyles[size]}
-    ${roundedStyles[rounded]}
-    ${shadowStyles}
-    ${disabledStyles}
-    ${className}
-    group
-  `.replace(/\s+/g, ' ').trim();
+        const combinedClass = `
+        ${baseStyles}
+        ${variantStyles[variant] ?? variantStyles.filled}
+        ${sizeStyles[size]}
+        ${roundedStyles[rounded]}
+        ${shadowStyles}
+        ${disabledStyles}
+        ${className}
+        group
+    `.replace(/\s+/g, ' ').trim();
 
     return (
         <button
