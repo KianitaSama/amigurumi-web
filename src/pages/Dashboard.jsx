@@ -8,7 +8,7 @@ import Input from '../components/common/Input.jsx';
 import Button from '../components/common/Button.jsx';
 import { Link } from 'react-router-dom';
 import { ROUTES, publicationPath } from '../constants/routes';
-import { pins } from '../constants/pins';
+import { pins, accentClasses } from '../constants/pins';
 
 const techniqueOptions = [
     { id: 'punto_medio_alto', label: 'Punto Medio Alto' },
@@ -21,6 +21,17 @@ const techniqueOptions = [
     { id: 'bordado_sobre_tejido', label: 'Bordado en Relieve' }
 ];
 
+const IMAGE_POOL = [
+    'Efelante.png',
+    'burro.png',
+    'conejo.png',
+    'rito.png',
+    'Poo.png',
+    'co.png',
+    'pig.png',
+    'tig.png'
+];
+
 const Dashboard = () => {
 
     const [description, setDescription] = useState('');
@@ -28,6 +39,7 @@ const Dashboard = () => {
     const [selectedTechniques, setSelectedTechniques] = useState(['amigurumi']);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedImageName, setSelectedImageName] = useState('');
+    const [publications, setPublications] = useState(() => pins);
 
     const parsedHashtags = hashtags
         .split(',')
@@ -57,11 +69,52 @@ const Dashboard = () => {
 
     const handlePublish = (event) => {
         event.preventDefault();
-        console.log('Publicación nueva', {
-            description,
-            hashtags: parsedHashtags,
-            selectedTechniques
+        const normalizedImage = selectedImageName
+            ? IMAGE_POOL.find((file) => file.toLowerCase() === selectedImageName.toLowerCase())
+            : null;
+        const baseImage = normalizedImage || IMAGE_POOL[(publications.filter((pin) => pin.type !== 'profile').length) % IMAGE_POOL.length];
+        const newId = `preview-${Date.now()}`;
+        const previewDescription = description.trim() || 'Publicación simulada de prueba para mostrar flujo.';
+        const accentIndex = publications.filter((pin) => pin.type !== 'profile').length % accentClasses.length;
+        const newPin = {
+            id: newId,
+            title: previewDescription.slice(0, 40).trim() || 'Publicación rápida',
+            description: previewDescription,
+            fullDescription: previewDescription,
+            image: `/src/assets/images/Amigurumis/${baseImage}`,
+            accent: accentClasses[accentIndex],
+            tags: parsedHashtags.length ? parsedHashtags : ['#amigurumi'],
+            creator: user.displayName || 'Tejedora de prueba',
+            createdAt: 'Ahora mismo',
+            mood: selectedTechniques.length ? selectedTechniques.join(', ') : 'Explorando técnicas',
+            gallery: [
+                {
+                    id: `${newId}-hero`,
+                    url: `/src/assets/images/Amigurumis/${baseImage}`,
+                    label: 'Vista simulada'
+                }
+            ],
+            comments: [
+                {
+                    id: `${newId}-comment-1`,
+                    author: user.displayName || 'Comunidad de prueba',
+                    role: 'Simulador de publicaciones',
+                    text: `Cargando ${baseImage} para anticipar cómo se verá una publicación final; incluye ${selectedTechniques.join(', ') || 'técnicas base'}.`,
+                    time: 'Ahora mismo',
+                    imageLabel: 'Simulación'
+                }
+            ]
+        };
+
+        setPublications((prev) => {
+            const profile = prev.find((pin) => pin.type === 'profile');
+            const others = prev.filter((pin) => pin.type !== 'profile');
+            if (profile) {
+                return [profile, newPin, ...others];
+            }
+            return [newPin, ...others];
         });
+
         clearForm();
         setIsModalOpen(false);
     };
@@ -233,7 +286,7 @@ const Dashboard = () => {
 
                 <div className="mx-auto max-w-7xl columns-1 gap-6 sm:columns-2 lg:columns-3 xl:columns-4 space-y-6">
                     
-                    {pins.map((pin, index) => {
+                    {publications.map((pin, index) => {
                         // CASO 1: LA CARTA DE PERFIL
                         if (pin.type === 'profile') {
                             return (
